@@ -11,12 +11,6 @@ var socket = require('socket.io');
 
 var io = socket(server);
 
-
-
-
-
-
-
 function getOriginalDirectory() {
 	var directory = path.dirname(process.argv[1]);
 	
@@ -38,17 +32,24 @@ var testPath = directory + '\\TestScreenshots\\iOS';
 var testFiles = fs.readdirSync(testPath);
 
 
-var checkFiles = [];
-for (var i = 0; i < testFiles.length; i++) {
-	var dirName = testFiles[i];
-	var fail = dirName.substring(dirName.length - 7);
-	if (fail == 'failure') {
-		checkFiles += testPath + dirName;
-	}
-	
-}
-console.log(testFiles);
+var checkFiles = getFails();
 
-app.listen(8000, function () {
-  console.log('Example app listening on port 8000!')
-})
+function getFails() {
+	var checkFiles = [];
+	for (var i = 0; i < testFiles.length; i++) {
+		var dirName = testFiles[i];
+		var fail = dirName.substring(dirName.length - 7);
+		var file = dirName.substring(0, dirName.length - 8);
+		//console.log(file);
+		if (fail == 'failure') {
+			var failPath = testPath + '\\' +  dirName;
+			var truePath = actualPath + '\\' + file;
+			var testImg = fs.readdirSync(failPath);
+			checkFiles.push({actualPath: truePath, failPath: failPath, file: file, img: testImg});
+		}
+	}
+	return checkFiles;
+}
+
+var testImages = [];
+
