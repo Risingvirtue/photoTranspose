@@ -1,27 +1,81 @@
 canvas = document.getElementById("photo");
 ctx = canvas.getContext("2d");
+var height = 1136;
+var width = 640;
+canvas.height = height;
+canvas.width = width;
 
+
+function b64(e){var t="";var n=new Uint8Array(e);var r=n.byteLength;for(var i=0;i<r;i++){t+=String.fromCharCode(n[i])}return window.btoa(t)}
+/*
 var actual = new Image();
-actual.onload = renderActual;
+actual.onload = testing
 actual.src = "actual.png";
 var actualInfo;
 var actualData;
 
 
 var test = new Image();
+
 test.src = "test.png";
 var testData;
+*/
+$(document).ready(function() {
+	socket = io.connect('http://localhost:3000');
+	//listening to server
+	
+	socket.on('images', render);
+})
 
-function renderActual() {
-	console.log('actual');
+
+function start() {
+	socket.emit('start');
+}
+
+
+
+
+function render(data) {
+	console.log(canvas.height, canvas.width);
+	//var array = new Uint8ClampedArray(data.actualImg);
+	//var img = new ImageData(array, canvas.width, canvas.height);
+	//var src = "data:image/png;base64,"+ b64(data.actualImg)
+	//console.log(src);
+	var img = new Image();
+	img.src = data.actualImg;
+	console.log(data.actualImg);
+	setTimeout(function () {
+		console.log('hello');
+		ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+	}, 4000)
+	
+	//ctx.fillRect(0,0, canvas.width, canvas.height);
+	//renderActual(data.actualImg);
+	/*
+	for (test of data) {
+		for (img of test.img) {
+			var actualPath = test.actualPath + '\\' + test.file + '\\' + test.img;
+			var failPath = test.failPath + '\\' + test.file + '\\' + test.img;
+			renderActual(actualPath);
+		}
+	}
+	*/
+}
+
+function renderActual(actualPath) {
+	console.log(actualPath);
+	
+	var actual = new Image();
+	actual.src = actualPath;
+	console.log(actual.height);
 	canvas.width = actual.width;
 	canvas.height = actual.height;
 	ctx.clearRect(0,0, canvas.width, canvas.height);
-	ctx.drawImage(actual, 0, 0, canvas.width, canvas.height);
-	var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
-	actualData = imgd.data;
-	console.log(actualData);
-	renderTest();
+	//ctx.drawImage(actual, 0, 0, canvas.width, canvas.height);
+	//var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
+	
+	//console.log(imgd);
+	//return imgd;
 }
 
 function renderTest() {

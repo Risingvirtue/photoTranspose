@@ -10,5 +10,5 @@ button {
 }
 
 canvas {
-	visibility: hidden;
+	visibility: visible;
 }
