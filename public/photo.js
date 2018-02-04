@@ -10,19 +10,17 @@ var failImgd = [];
 var transpose = [];
 $(document).ready(function() {
 	socket = io.connect('http://localhost:3000');
-
+	socket.emit('start');
 	//listening to server
 	socket.on('images', render);
 })
 
 
 function start() {
-	socket.emit('start');
+	$('canvas').css('visibility', 'visible');
 }
 
 function render(data) {
-	console.log(data);
-	
 	for (test of data) {
 		
 		var actualImg = new Image();
@@ -35,14 +33,13 @@ function render(data) {
 		failImg.src = test.failData;
 	}
 	
-	setTimeout(function(){
+	setTimeout(function() {
 		for (var i = 0; i < actualImgd.length; i++) {
 			//console.log(actualImgd[i]);
 			var newData = changePixel(actualImgd[i].data, failImgd[i].data);
 			
 			failImgd[i].data = newData;
-			ctx.clearRect(0,0, canvas.width, canvas.height);
-			ctx.putImageData(failImgd[i], 0, 0);
+			transpose.push(failImgd[i]);
 		}
 	}, 0)
 }
@@ -83,12 +80,7 @@ function changePixel(actual, fail) {
 	}
 	
 	return fail;
-	/*
-	actualInfo.data = testData;
-	console.log(testData);
-	ctx.putImageData(actualInfo, 0, 0);
-	$("#photo").css('visibility', 'visible');
-	*/
+
 	
 }
 
