@@ -4,6 +4,7 @@ ctx = canvas.getContext("2d");
 var actual = new Image();
 actual.onload = renderActual;
 actual.src = "actual.png";
+var actualInfo;
 var actualData;
 
 
@@ -11,17 +12,6 @@ var test = new Image();
 //test.onload = renderTest;
 test.src = "test.png";
 var testData;
-
-/*
-
-canvas.width = 300;
-canvas.height = 300;
-ctx.fillStyle = "red";
-ctx.fillRect(0,0, canvas.width, canvas.height);
-var data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-console.log(data.data);
-*/
 
 function renderActual() {
 	console.log('actual');
@@ -35,24 +25,23 @@ function renderActual() {
 	renderTest();
 }
 
-
 function renderTest() {
 	console.log('hello');
 	canvas.width = test.width;
 	canvas.height = test.height;
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(test, 0, 0, canvas.width, canvas.height);
-	
 	var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
+	actualInfo = imgd;
 	testData = imgd.data;
 	console.log(testData);
 	
-
-	changePixel(imgd);
+	//changePixel();
 	
 }
 
-function changePixel(imgd) {
+
+function changePixel() {
 	for (var i = 0, n = testData.length; i < n; i += 4) {
 		var actualPix = {r: actualData[i], g: actualData[i+1], b: actualData[i+ 2], a: actualData[i+3]};
 		var testPix = {r: testData[i], g: testData[i+1], b: testData[i+ 2]};
@@ -64,9 +53,11 @@ function changePixel(imgd) {
 			testData[i+3] = actualPix.a;
 		}
 	}
-	imgd.data = testData;
+	actualInfo.data = testData;
 	console.log(testData);
-	ctx.putImageData(imgd, 0, 0);
+	ctx.putImageData(actualInfo, 0, 0);
+	
+	$("#photo").css('visibility', 'visible');
 	//ctx.drawImage(actual, 0,0, canvas.width, canvas.height);
 
 }
