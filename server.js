@@ -29,15 +29,26 @@ function newConnection(socket) {
 		
 		var checkFiles = getFails(testFiles);
 		
+		
+		var checkImages = [];
 		for (test of checkFiles) {
 			for (img of test.img) {
 				var actualPath = test.actualPath + '\\' + test.img;
 				var failPath = test.failPath + '\\' + test.img;
+				
 				var actualImg = getImage(actualPath);
-				var base64 =  "data:image/png;base64,"+ actualImg.toString("base64");
-				socket.emit('images', {actualImg: base64});
+				var failImg = getImage(failPath);
+				
+				var actualData =  "data:image/png;base64,"+ actualImg.toString("base64");
+				var failData =  "data:image/png;base64,"+ failImg.toString("base64");
+				checkImages.push({name: test.testImg, actualData: actualData, failData: failData});
+				
 			}
 		}
+		
+		socket.emit('images', checkImages);
+		
+		
 		
 	}
 	
@@ -84,8 +95,8 @@ function getFails(testFiles) {
 function getImage(currPath) {
 	//console.log(currPath);
 	
-	var data = fs.readFileSync(currPath);
-	return data;
+	var bitmap = fs.readFileSync(currPath);
+	return bitmap;
 	
 	
 	
