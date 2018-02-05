@@ -18,6 +18,7 @@ $(document).ready(function() {
 
 function start() {
 	$('canvas').css('visibility', 'visible');
+	console.log(transpose);
 }
 
 function render(data) {
