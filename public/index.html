@@ -18,10 +18,18 @@
 	
 	<body>
 		<div class="container-fluid">
-		
-			<div class="row text-center">
-				<button class="btn" onclick="start()">Render</button>
+			<div id="start" class="text-center">
+				<button id="render" class="btn" onclick="start()">Render</button>
 			</div>
+			
+			<p class= "absolute left">
+				<i class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="prev()"></i>
+			</p>
+			
+			<p class= "absolute right">
+				<i class="fa fa-arrow-circle-o-right" aria-hidden="true" onclick="next()"></i>
+			</p>
+
 			<div class="row text-center">
 				<canvas id="photo"></canvas>
 			</div>

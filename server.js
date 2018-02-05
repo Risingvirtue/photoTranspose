@@ -48,8 +48,6 @@ function newConnection(socket) {
 		
 		socket.emit('images', checkImages);
 		
-		
-		
 	}
 	
 }

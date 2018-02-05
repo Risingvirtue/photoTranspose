@@ -7,19 +7,52 @@ canvas.width = width;
 
 var actualImgd = [];
 var failImgd = [];
-var transpose = [];
+var transpose = [1,2];
+var curr = 0;
 $(document).ready(function() {
+	
 	socket = io.connect('http://localhost:3000');
 	socket.emit('start');
 	//listening to server
 	socket.on('images', render);
+	ctx.fillRect(0,0, canvas.width, canvas.height);
+	$('canvas').css('visibility', 'visible');
+	fitToContainer();
 })
 
 
+$(window).resize(function() {
+	fitToContainer();
+});
+
+
+function fitToContainer() {
+	$('#start').css('margin-top', canvas.height/ 2 - 50);
+	$('.left').css('margin-top', canvas.height/ 2 - 50);
+	$('.left').css('margin-left', -(canvas.width / 2 + 100));
+	$('.right').css('margin-top', canvas.height/ 2 - 50);
+	$('.right').css('margin-left', canvas.width / 2 + 50);
+};
+
+
 function start() {
+	//console.log('click');
 	$('canvas').css('visibility', 'visible');
-	console.log(transpose);
+	$('.left').css('visibility', 'visible');
+	$('.right').css('visibility', 'visibile');
 }
+
+function next() {
+
+	curr = (curr + 1) % transpose.length;
+	console.log(curr);
+}
+
+function prev() {
+	curr = (curr - 1 + transpose.length)  % transpose.length;
+	console.log(curr);
+}
+
 
 function render(data) {
 	for (test of data) {

@@ -1,5 +1,5 @@
 body {
-	
+	font-size: 50px;
 }
 
 
@@ -11,4 +11,28 @@ button {
 
 canvas {
 	visibility: hidden;
+	z-index: 0;
+}
+
+#start {
+	margin: 0;
+	position: absolute;
+	left:50%;
+}
+
+#render {
+	width: 100px;
+	height: 50px;
+	margin-left: -50px;
+	z-index: 1;
+	
+}
+
+.absolute {
+	position: absolute;
+	left:50%;
+}
+
+i:hover {
+	opacity: 0.3;
 }
