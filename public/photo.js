@@ -7,7 +7,7 @@ canvas.width = width;
 
 var actualImgd = [];
 var failImgd = [];
-var transpose = [1,2];
+var transpose = [];
 var curr = 0;
 $(document).ready(function() {
 	
@@ -15,8 +15,8 @@ $(document).ready(function() {
 	socket.emit('start');
 	//listening to server
 	socket.on('images', render);
-	ctx.fillRect(0,0, canvas.width, canvas.height);
-	$('canvas').css('visibility', 'visible');
+	//ctx.fillRect(0,0, canvas.width, canvas.height);
+	//$('canvas').css('visibility', 'visible');
 	fitToContainer();
 })
 
@@ -37,21 +37,35 @@ function fitToContainer() {
 
 function start() {
 	//console.log('click');
+	displayIssue();
 	$('canvas').css('visibility', 'visible');
 	$('.left').css('visibility', 'visible');
 	$('.right').css('visibility', 'visibile');
+	$('#render').css('display', 'none');
+	
 }
 
-function next() {
 
+
+function next() {
+	
 	curr = (curr + 1) % transpose.length;
+	displayIssue();
 	console.log(curr);
 }
 
 function prev() {
+	
 	curr = (curr - 1 + transpose.length)  % transpose.length;
+	displayIssue();
 	console.log(curr);
 }
+
+function displayIssue() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.putImageData(transpose[curr], 0, 0);
+}
+
 
 
 function render(data) {
