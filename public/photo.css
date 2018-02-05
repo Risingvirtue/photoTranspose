@@ -28,6 +28,13 @@ canvas {
 	
 }
 
+#select {
+	margin: 0;
+	position: absolute;
+	font-size: 25px;
+	left: 50%;
+}
+
 .absolute {
 	position: absolute;
 	left:50%;
@@ -36,3 +43,12 @@ canvas {
 i:hover {
 	opacity: 0.3;
 }
+
+.left {
+	visibility: hidden;
+}
+
+.right {
+	visibility: hidden;
+}
+

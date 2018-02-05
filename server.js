@@ -13,7 +13,6 @@ var io = socket(server);
 
 io.sockets.on('connection', newConnection);
 
-
 var directory = getOriginalDirectory();
 
 function newConnection(socket) {
@@ -33,15 +32,18 @@ function newConnection(socket) {
 		var checkImages = [];
 		for (test of checkFiles) {
 			for (img of test.img) {
-				var actualPath = test.actualPath + '\\' + test.img;
-				var failPath = test.failPath + '\\' + test.img;
+				var actualPath = test.actualPath + '\\' + img;
+				var failPath = test.failPath + '\\' + img;
 				
 				var actualImg = getImage(actualPath);
 				var failImg = getImage(failPath);
 				
 				var actualData =  "data:image/png;base64,"+ actualImg.toString("base64");
 				var failData =  "data:image/png;base64,"+ failImg.toString("base64");
-				checkImages.push({name: test.testImg, actualData: actualData, failData: failData});
+				
+				var name = img.split('.')[0];
+				
+				checkImages.push({name: name, actualData: actualData, failData: failData});
 				
 			}
 		}
@@ -52,9 +54,6 @@ function newConnection(socket) {
 	
 }
 
-
-
-
 function getOriginalDirectory() {
 	var directory = path.dirname(process.argv[1]);
 	
@@ -63,15 +62,7 @@ function getOriginalDirectory() {
 	
 	var OG = pathArr.join('\\');
 	return OG;
-	
-	
 }
-
-
-
-
-
-
 
 function getFails(testFiles) {
 	var checkFiles = [];
@@ -95,8 +86,5 @@ function getImage(currPath) {
 	
 	var bitmap = fs.readFileSync(currPath);
 	return bitmap;
-	
-	
-	
-}
 
+}

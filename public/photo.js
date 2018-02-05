@@ -7,6 +7,7 @@ canvas.width = width;
 
 var actualImgd = [];
 var failImgd = [];
+var imgName = [];
 var transpose = [];
 var curr = 0;
 $(document).ready(function() {
@@ -15,8 +16,6 @@ $(document).ready(function() {
 	socket.emit('start');
 	//listening to server
 	socket.on('images', render);
-	//ctx.fillRect(0,0, canvas.width, canvas.height);
-	//$('canvas').css('visibility', 'visible');
 	fitToContainer();
 })
 
@@ -28,6 +27,8 @@ $(window).resize(function() {
 
 function fitToContainer() {
 	$('#start').css('margin-top', canvas.height/ 2 - 50);
+	$('#select').css('margin-top', canvas.height / 2 + 25);
+	
 	$('.left').css('margin-top', canvas.height/ 2 - 50);
 	$('.left').css('margin-left', -(canvas.width / 2 + 100));
 	$('.right').css('margin-top', canvas.height/ 2 - 50);
@@ -39,16 +40,15 @@ function start() {
 	//console.log('click');
 	displayIssue();
 	$('canvas').css('visibility', 'visible');
+	
 	$('.left').css('visibility', 'visible');
-	$('.right').css('visibility', 'visibile');
+	$('.right').css('visibility', 'visible');
 	$('#render').css('display', 'none');
+	$('#select').css('display', 'none');
 	
 }
 
-
-
 function next() {
-	
 	curr = (curr + 1) % transpose.length;
 	displayIssue();
 	console.log(curr);
@@ -64,6 +64,8 @@ function prev() {
 function displayIssue() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.putImageData(transpose[curr], 0, 0);
+	console.log(imgName[curr]);
+	$('#name').html(imgName[curr])
 }
 
 
@@ -79,11 +81,13 @@ function render(data) {
 		var failImg = new Image();
 		failImg.onload = renderTest;
 		failImg.src = test.failData;
+		//console.log(test);
+		imgName.push(test.name);
 	}
 	
 	setTimeout(function() {
 		for (var i = 0; i < actualImgd.length; i++) {
-			//console.log(actualImgd[i]);
+			
 			var newData = changePixel(actualImgd[i].data, failImgd[i].data);
 			
 			failImgd[i].data = newData;
@@ -128,7 +132,4 @@ function changePixel(actual, fail) {
 	}
 	
 	return fail;
-
-	
 }
-
