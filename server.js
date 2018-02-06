@@ -19,14 +19,17 @@ function newConnection(socket) {
 	console.log('New Connection: ' + socket.id);
 	
 	socket.on('start', start);
-	function start() {
-		var actualPath = directory  + '\\KnownScreenshots\\iOS\\iPhone SE'
+	function start(data) {
+		
+		var dirInfo = getFilePath(data.phoneType);
+		
+		var actualPath = directory  + dirInfo.actualDir;
 
-		var testPath = directory + '\\TestScreenshots\\iOS';
+		var testPath = directory + dirInfo.testDir;
 
 		var testFiles = fs.readdirSync(testPath);
 		
-		var checkFiles = getFails(testFiles);
+		var checkFiles = getFails(testFiles, dirInfo);
 		
 		
 		var checkImages = [];
@@ -64,15 +67,31 @@ function getOriginalDirectory() {
 	return OG;
 }
 
-function getFails(testFiles) {
+function getFilePath(phoneType) {
+	switch (phoneType) {
+		case 'se':
+			return {actualDir: '\\KnownScreenshots\\iOS\\iPhone SE', testDir: '\\TestScreenshots\\iOS'}
+			break;
+		case '6gen':
+			return {actualDir: '\\KnownScreenshots\\iOS\\iPod 6gen', testDir: '\\TestScreenshots\\iOS'}
+			break;
+		case 's7':
+			return {actualDir: '\\KnownScreenshots\\Android\\s7', testDir: '\\TestScreenshots\\Android'}
+			break;
+	}
+}
+
+
+
+function getFails(testFiles. dirInfo) {
 	var checkFiles = [];
 	for (var i = 0; i < testFiles.length; i++) {
 		var dirName = testFiles[i];
 		var fail = dirName.substring(dirName.length - 7);
 		var file = dirName.substring(0, dirName.length - 8);
 		if (fail == 'failure') {
-			var failPath = '..\\TestScreenshots\\iOS' + '\\' +  dirName;
-			var truePath = '..\\KnownScreenshots\\iOS\\iPhone SE' + '\\' + file;
+			var failPath = '..' + dirInfo.testDir   + '\\' +  dirName;
+			var truePath = '..' + dirInfo.actualDir + '\\' + file;
 			var testImg = fs.readdirSync(failPath);
 			checkFiles.push({actualPath: truePath, failPath: failPath, file: file, img: testImg});
 		}

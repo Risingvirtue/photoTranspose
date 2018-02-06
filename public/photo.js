@@ -13,7 +13,7 @@ var curr = 0;
 $(document).ready(function() {
 	
 	socket = io.connect('http://localhost:3000');
-	socket.emit('start');
+	
 	//listening to server
 	socket.on('images', render);
 	fitToContainer();
@@ -38,6 +38,8 @@ function fitToContainer() {
 
 function start() {
 	//console.log('click');
+	var phoneType = $("#phone").val();
+	socket.emit('start', {phoneType: phoneType});
 	displayIssue();
 	$('canvas').css('visibility', 'visible');
 	
@@ -101,7 +103,6 @@ function renderActual() {
 	canvas.height = this.height;
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
-	
 	var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
 	actualImgd.push(imgd);
 	//console.log(imgd);
