@@ -25,6 +25,9 @@ $(document).ready(function() {
 
 $(window).resize(function() {
 	fitToContainer();
+	if (transpose.length != 0) {
+		displayIssue()
+	}
 });
 
 
@@ -88,7 +91,7 @@ function prev() {
 
 function displayIssue() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	/*
+	
 		var imageData = transpose[curr];
 		
 		memory.width = imageData.width;
@@ -98,8 +101,8 @@ function displayIssue() {
 		
 		ctx.drawImage(memory, 0, 0, canvas.width, canvas.height);
 		
-	*/
-	ctx.putImageData(transpose[curr], 0, 0);
+	
+	//ctx.putImageData(failImgd[curr], 0, 0);
 	console.log(imgName[curr]);
 	$('#name').html(imgName[curr]);
 }
@@ -129,7 +132,7 @@ function render(data) {
 			failImgd[i].data = newData;
 			transpose.push(failImgd[i]);
 		}
-		
+		fitToContainer();
 		displayIssue();
 	}, 0)
 }
