@@ -56,3 +56,8 @@ i:hover {
 	position: absolute;
 	left: 80%;
 }
+
+#removeDiv {
+	position: absolute;
+	right: 80%;
+}

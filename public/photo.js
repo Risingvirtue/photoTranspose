@@ -40,7 +40,7 @@ function start() {
 	//console.log('click');
 	var phoneType = $("#phone").val();
 	socket.emit('start', {phoneType: phoneType});
-	displayIssue();
+	//displayIssue();
 	$('canvas').css('visibility', 'visible');
 	
 	$('.left').css('visibility', 'visible');
@@ -111,6 +111,8 @@ function render(data) {
 			failImgd[i].data = newData;
 			transpose.push(failImgd[i]);
 		}
+		
+		displayIssue();
 	}, 0)
 }
 
