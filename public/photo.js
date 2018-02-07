@@ -50,6 +50,22 @@ function start() {
 	
 }
 
+
+//need testing
+function resetInfo() {
+	ctx.clearRect(0,0, canvas.width, canvas.height);
+	$('canvas').css('visibility', 'hidden');
+	$('.left').css('visibility', 'hidden');
+	$('.right').css('visibility', 'hidden');
+	$('#render').css('display', 'block');
+	$('#select').css('display', 'block');
+	actualImgd = [];
+	failImgd = [];
+	imgName = [];
+	transpose = [];
+	curr = 0;
+	
+}
 function next() {
 	curr = (curr + 1) % transpose.length;
 	displayIssue();

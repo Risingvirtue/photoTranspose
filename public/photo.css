@@ -51,3 +51,8 @@ i:hover {
 .right {
 	visibility: hidden;
 }
+
+#resetDiv {
+	position: absolute;
+	left: 80%;
+}
