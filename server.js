@@ -68,8 +68,9 @@ function newConnection(socket) {
 		var checkFiles = getFails(testFiles, dirInfo);
 		
 		for (test of checkFiles) {
-			rimraf(test, function () { 
-				console.log('removed file path to ' + test);
+			
+			rimraf(test.failPath, function () { 
+				console.log('removed file path to ' + test.failPath);
 			});
 		}
 		

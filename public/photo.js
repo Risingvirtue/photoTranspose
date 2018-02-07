@@ -75,6 +75,13 @@ function resetInfo() {
 	transpose = [];
 	curr = 0;
 	
+	
+	
+}
+
+function remove() {
+	var phoneType = $("#phone").val();
+	socket.emit('remove', {phoneType: phoneType});
 }
 function next() {
 	curr = (curr + 1) % transpose.length;
