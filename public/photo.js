@@ -1,5 +1,8 @@
 canvas = document.getElementById("photo");
 ctx = canvas.getContext("2d");
+
+var memory = document.getElementById("memory");
+
 var height = 1136;
 var width = 640;
 canvas.height = height;
@@ -26,6 +29,10 @@ $(window).resize(function() {
 
 
 function fitToContainer() {
+	var ratio = ($( window ).height() * 2/ 3) / canvas.height;
+	console.log(ratio);
+	canvas.height = canvas.height * ratio;
+	canvas.width = canvas.width * ratio;
 	$('#start').css('margin-top', canvas.height/ 2 - 50);
 	$('#select').css('margin-top', canvas.height / 2 + 25);
 	
@@ -81,9 +88,20 @@ function prev() {
 
 function displayIssue() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	/*
+		var imageData = transpose[curr];
+		
+		memory.width = imageData.width;
+		memory.height = imageData.height;
+		
+		memory.getContext("2d").putImageData(imageData, 0, 0);
+		
+		ctx.drawImage(memory, 0, 0, canvas.width, canvas.height);
+		
+	*/
 	ctx.putImageData(transpose[curr], 0, 0);
 	console.log(imgName[curr]);
-	$('#name').html(imgName[curr])
+	$('#name').html(imgName[curr]);
 }
 
 
