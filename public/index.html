@@ -18,16 +18,19 @@
 	
 	<body>
 		<div class="container-fluid">
+			<div id='nofail' class='text-center absolute'>
+				<p id="failure" style="font-size: 20px">No failures for iPhone SE</p>
+			</div>
 			<div id="start" class="text-center">
+				
 				<button id="render" class="btn" onclick="start()">Render</button>
-			
 			</div>
 			
 			<div id="select" class="text-center">
 				<select id='phone' style="width: 200px; margin-left: -100px;">
 					<option value="se">iPhone SE</option>
 					<option value="6gen">iPod 6gen</option>
-					<option value="s7">s7</option>
+					<option value="s7">Android s7</option>
 				</select>
 			</div>
 			
@@ -54,8 +57,11 @@
 				<canvas id="photo"></canvas>
 				
 			</div>
+			
+			<p style="font-size: 12px; position:absolute; bottom:0; right:0;">@Johnny On 2018</p>
 			<canvas id="memory"></canvas>
 		</div>
 		<script src="photo.js"></script>
+		<script src="buttons.js"></script>
 	</body>
 </html>
