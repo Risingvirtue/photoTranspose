@@ -103,7 +103,7 @@ function render(data) {
 function showAndHide(phoneText) {
 	$("#failure").html(phoneText);
 	
-	$("#failure").css('opacity', 1);
+	
 	
 	$("#failure").fadeToggle("slow", function() {
 		$("#failure").fadeToggle("slow");

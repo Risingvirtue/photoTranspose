@@ -1,15 +1,18 @@
+
+function showInfo() {
+	$('canvas').css('visibility', 'visible');
+	$('.left').css('visibility', 'visible');
+	$('.right').css('visibility', 'visible');
+	$('#render').css('display', 'none');
+	$('#select').css('display', 'none');
+}
 function start() {
 	//console.log('click');
 	var phoneType = $("#phone").val();
 	socket.emit('start', {phoneType: phoneType});
 	//displayIssue();
-	$('canvas').css('visibility', 'visible');
-	
-	$('.left').css('visibility', 'visible');
-	$('.right').css('visibility', 'visible');
-	$('#render').css('display', 'none');
-	$('#select').css('display', 'none');
-	$("#failure").css('opacity', 0);
+	showInfo();
+
 	
 }
 
@@ -22,7 +25,7 @@ function resetInfo() {
 	$('.right').css('visibility', 'hidden');
 	$('#render').css('display', 'block');
 	$('#select').css('display', 'block');
-	$("#failure").css('opacity', 0);
+	
 	actualImgd = [];
 	failImgd = [];
 	imgName = [];
