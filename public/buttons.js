@@ -11,9 +11,7 @@ function start() {
 	var phoneType = $("#phone").val();
 	socket.emit('start', {phoneType: phoneType});
 	//displayIssue();
-	showInfo();
-
-	
+	//showInfo();
 }
 
 
@@ -26,6 +24,7 @@ function resetInfo() {
 	$('#render').css('display', 'block');
 	$('#select').css('display', 'block');
 	
+	$('#name').html('Photo Transpose');
 	actualImgd = [];
 	failImgd = [];
 	imgName = [];

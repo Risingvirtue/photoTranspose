@@ -2,7 +2,7 @@ canvas = document.getElementById("photo");
 ctx = canvas.getContext("2d");
 
 var memory = document.getElementById("memory");
-
+var modal = document.getElementById('myModal');
 var height = 1136;
 var width = 640;
 canvas.height = height;
@@ -31,6 +31,12 @@ $(window).resize(function() {
 		displayIssue()
 	}
 });
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
 //when window is resized, adjust margins of everything
 function fitToContainer() {
@@ -96,6 +102,7 @@ function render(data) {
 
 		fitToContainer(); 
 		if (transpose.length != 0) {
+			showInfo();
 			displayIssue();
 		} else {
 			var phoneText = 'No failures for ' +  $("#phone :selected").text() + '.'
@@ -105,8 +112,6 @@ function render(data) {
 
 	}, 0)
 }
-
-
 
 function showAndHide(phoneText) {
 	
