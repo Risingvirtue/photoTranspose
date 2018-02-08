@@ -7,6 +7,8 @@ var path = require('path');
 
 var rimraf = require('rimraf');
 
+var exec = require("child_process").exec;
+
 app.use(express.static('public'));
 
 var socket = require('socket.io');
@@ -16,6 +18,16 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 var directory = getOriginalDirectory();
+
+exec('py "..\\python test\\test.py"', function (err, stdout, stderr) {
+	if (err){
+		
+		console.log(err);
+		return;
+	}
+    console.log(stdout);
+});
+
 
 function newConnection(socket) {
 	console.log('New Connection: ' + socket.id);
@@ -122,7 +134,6 @@ function getFails(testFiles, dirInfo) {
 
 
 function getImage(currPath) {
-	//console.log(currPath);
 	
 	var bitmap = fs.readFileSync(currPath);
 	return bitmap;
