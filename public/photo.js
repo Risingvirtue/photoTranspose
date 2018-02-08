@@ -45,14 +45,15 @@ function fitToContainer() {
 	console.log(ratio);
 	canvas.height = canvas.height * ratio;
 	canvas.width = canvas.width * ratio;
-	$("#failure").css('margin-top', canvas.height/ 2 - 100);
+	var rect = canvas.getBoundingClientRect();
+	$("#failure").css('margin-top', canvas.height/ 2 - 100 + rect.top);
 
-	$('#start').css('margin-top', canvas.height/ 2 - 50);
-	$('#select').css('margin-top', canvas.height / 2 + 25);
+	$('#start').css('margin-top', canvas.height/ 2 - 50 + rect.top);
+	$('#select').css('margin-top', canvas.height / 2 + 25 + rect.top);
 	
-	$('.left').css('margin-top', canvas.height/ 2 - 50);
+	$('.left').css('margin-top', canvas.height/ 2 - 50 + rect.top);
 	$('.left').css('margin-left', -(canvas.width / 2 + 100));
-	$('.right').css('margin-top', canvas.height/ 2 - 50);
+	$('.right').css('margin-top', canvas.height/ 2 - 50 + rect.top);
 	$('.right').css('margin-left', canvas.width / 2 + 50);
 };
 

@@ -1,5 +1,15 @@
-body {
+html, body {
 	font-size: 50px;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	/* Firefox */
+	height: -moz-calc(100%);
+	/* WebKit */
+	height: -webkit-calc(100%);
+	/* Opera */
+	height: -o-calc(100%);
+	/* Standard */
+	height: calc(100%);
+	background: linear-gradient(rgb(64,40,74),rgb(115,67,75), rgb(179,77,37), rgb(240,126,7));
 }
 
 
@@ -13,6 +23,23 @@ canvas {
 	visibility: hidden;
 	z-index: 0;
 }
+
+
+
+.frame{
+	border-color: #2B1E16;
+	border-width: 25px;
+	border-style: solid;
+	padding: 15px;
+	-moz-box-shadow:    inset 0 0 20px #000000;
+	-webkit-box-shadow: inset 0 0 20px #000000;
+	box-shadow:         inset 0 0 20px #000000;
+}
+			
+.innerFrame {
+	background-color: #C0C0C0;
+}
+
 
 /* The Modal (background) */
 .modal {

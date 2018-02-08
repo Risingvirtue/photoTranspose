@@ -19,10 +19,10 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 var directory = getOriginalDirectory();
-
-exec('py "..\\python test\\test.py"', function (err, stdout, stderr) {
+var tempPath = '..\\python test\\test.py'
+var actualPath = directory + '\\python test\\test.py'
+exec('py "' + actualPath + '"', function (err, stdout, stderr) {
 	if (err){
-		
 		console.log(err);
 		return;
 	}
@@ -45,7 +45,7 @@ function newConnection(socket) {
 
 		var testFiles = fs.readdirSync(testPath); //gets names of all the folders
 		
-		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure
+		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure as well as the array of images
 		
 		var checkImages = [];
 		for (test of checkFiles) {
@@ -59,7 +59,7 @@ function newConnection(socket) {
 				var actualData =  "data:image/png;base64,"+ actualImg.toString("base64");
 				var failData =  "data:image/png;base64,"+ failImg.toString("base64");
 				
-				var name = img.split('.')[0];
+				var name = img.split('.')[0]; //remove .png from image name
 
 				checkImages.push({name: name, actualData: actualData, failData: failData});
 			}
