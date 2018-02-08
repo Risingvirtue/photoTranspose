@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Risingvirtue/photoTranspose#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "rimraf": "^2.6.2",
     "socket.io": "^2.0.4"
   }
 }

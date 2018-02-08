@@ -5,6 +5,8 @@ var server = app.listen(3000);
 var fs = require('fs');
 var path = require('path');
 
+var rimraf = require('rimraf');
+
 app.use(express.static('public'));
 
 var socket = require('socket.io');
@@ -55,6 +57,25 @@ function newConnection(socket) {
 		}
 		//sends converted images back to client
 		socket.emit('images', checkImages);
+		
+	}
+	//need to test
+	socket.on('remove', remove);
+	
+	function remove(data) {
+		var dirInfo = getFilePath(data.phoneType);
+		
+		var testPath = directory + dirInfo.testDir;
+		var testFiles = fs.readdirSync(testPath);
+		
+		var checkFiles = getFails(testFiles, dirInfo);
+		
+		for (test of checkFiles) {
+			
+			rimraf(test.failPath, function () { 
+				console.log('removed file path to ' + test.failPath);
+			});
+		}
 		
 	}
 	

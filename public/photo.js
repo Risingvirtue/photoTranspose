@@ -1,5 +1,8 @@
 canvas = document.getElementById("photo");
 ctx = canvas.getContext("2d");
+
+var memory = document.getElementById("memory");
+
 var height = 1136;
 var width = 640;
 canvas.height = height;
@@ -14,7 +17,6 @@ var curr = 0;
 
 //when document is ready, start to listen to server
 $(document).ready(function() {
-	
 	socket = io.connect('http://localhost:3000');
 	
 	//listening to server
@@ -25,16 +27,20 @@ $(document).ready(function() {
 
 $(window).resize(function() {
 	fitToContainer();
+	if (transpose.length != 0) {
+		displayIssue()
+	}
 });
 
 //when window is resized, adjust margins of everything
 function fitToContainer() {
-	/*
-	var ratio = ($(window).height() * 2 / 3) / canvas.height;
-	canvas.height = $(window).height() * 2 / 3;
-	canvas.width = ratio * canvas.width;
-	
-	*/
+
+	var ratio = ($( window ).height() * 2/ 3) / canvas.height;
+	console.log(ratio);
+	canvas.height = canvas.height * ratio;
+	canvas.width = canvas.width * ratio;
+	$("#failure").css('margin-top', canvas.height/ 2 - 100);
+
 	$('#start').css('margin-top', canvas.height/ 2 - 50);
 	$('#select').css('margin-top', canvas.height / 2 + 25);
 	
@@ -44,45 +50,21 @@ function fitToContainer() {
 	$('.right').css('margin-left', canvas.width / 2 + 50);
 };
 
-//when render button is clicked
-function start() {
-	//console.log('click');
-	var phoneType = $("#phone").val();
-	
-	//gets path for type of phone from server
-	socket.emit('start', {phoneType: phoneType});
-	
-	//displayIssue();
-	
-	//hide buttons and reveal canvas
-	$('canvas').css('visibility', 'visible');
-	$('.left').css('visibility', 'visible');
-	$('.right').css('visibility', 'visible');
-	$('#render').css('display', 'none');
-	$('#select').css('display', 'none');
-	
-	
-}
 
-//go through images
-function next() {
-	curr = (curr + 1) % transpose.length;
-	displayIssue();
-	console.log(curr);
-}
-
-function prev() {
-	curr = (curr - 1 + transpose.length)  % transpose.length;
-	displayIssue();
-	console.log(curr);
-}
-
-//displays current image
 function displayIssue() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.putImageData(transpose[curr], 0, 0);
+	
+		var imageData = transpose[curr];
+		
+		memory.width = imageData.width;
+		memory.height = imageData.height;
+		
+		memory.getContext("2d").putImageData(imageData, 0, 0);
+		
+		ctx.drawImage(memory, 0, 0, canvas.width, canvas.height);
+
 	console.log(imgName[curr]);
-	$('#name').html(imgName[curr])
+	$('#name').html(imgName[curr]);
 }
 
 
@@ -111,13 +93,29 @@ function render(data) {
 			failImgd[i].data = newData;
 			transpose.push(failImgd[i]);
 		}
-		fitToContainer();
-		displayIssue();
-		
+
+		fitToContainer(); 
+		if (transpose.length != 0) {
+			displayIssue();
+		} else {
+			var phoneText = 'No failures for ' +  $("#phone :selected").text() + '.'
+			resetInfo();
+			showAndHide(phoneText);
+		}
+
 	}, 0)
 }
 
-// gets pixel information
+
+
+function showAndHide(phoneText) {
+	
+	$("#failure").html(phoneText);
+	$("#failure").fadeToggle("slow", function() {
+		$("#failure").fadeToggle("slow");
+	});
+}
+
 function renderActual() {
 	canvas.width = this.width;
 	canvas.height = this.height;
@@ -125,9 +123,8 @@ function renderActual() {
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
 	var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
 	actualImgd.push(imgd); //stores info
-	//console.log(imgd);
-	//return imgd;
 }
 
 // gets pixel information
@@ -155,6 +152,5 @@ function changePixel(actual, fail) {
 			fail[i+3] = actualPix.a;
 		}
 	}
-	
 	return fail;
 }
