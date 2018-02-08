@@ -101,16 +101,13 @@ function render(data) {
 }
 
 function showAndHide(phoneText) {
+	
 	$("#failure").html(phoneText);
-	
-	
-	
 	$("#failure").fadeToggle("slow", function() {
 		$("#failure").fadeToggle("slow");
 	});
-	
-	
 }
+
 function renderActual() {
 	canvas.width = this.width;
 	canvas.height = this.height;

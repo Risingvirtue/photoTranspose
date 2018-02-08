@@ -33,11 +33,16 @@ function resetInfo() {
 	curr = 0;
 
 }
-
-function remove() {
-	var phoneType = $("#phone").val();
-	socket.emit('remove', {phoneType: phoneType});
+function showRemove() {
+	$('.modal').css('display', 'block');
 }
+function remove() {
+	var phoneType = $("#phoneRemove").val();
+	socket.emit('remove', {phoneType: phoneType});
+	$('.modal').css('display', 'none');
+	showAndHide($("#phoneRemove :selected").text() + ' failure folders deleted.');
+}
+
 function next() {
 	curr = (curr + 1) % transpose.length;
 	displayIssue();
