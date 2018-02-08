@@ -61,6 +61,23 @@
 			<p style="font-size: 12px; position:absolute; bottom:0; right:0;">@Johnny On 2018</p>
 			<canvas id="memory"></canvas>
 		</div>
+		
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content text-center">
+				
+				<div style="font-size: 25px">Select which phone failures to remove:</div>
+				<select id='phoneRemove' style="width: 200px; font-size: 25px">
+					<option value="se">iPhone SE</option>
+					<option value="6gen">iPod 6gen</option>
+					<option value="s7">Android s7</option>
+				</select>
+				
+				<button class="btn" onclick="remove()">Delete</button>
+			</div>
+		</div>
+		
 		<script src="photo.js"></script>
 		<script src="buttons.js"></script>
 	</body>
