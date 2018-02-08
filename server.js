@@ -11,6 +11,7 @@ var socket = require('socket.io');
 
 var io = socket(server);
 
+//listens to localhost
 io.sockets.on('connection', newConnection);
 
 var directory = getOriginalDirectory();
@@ -19,17 +20,18 @@ function newConnection(socket) {
 	console.log('New Connection: ' + socket.id);
 	
 	socket.on('start', start);
+	//when render button is pressed
 	function start(data) {
-		
-		var dirInfo = getFilePath(data.phoneType);
+		console.log(data);
+		var dirInfo = getFilePath(data.phoneType); //gets path of files based on phone
 		
 		var actualPath = directory  + dirInfo.actualDir;
 
 		var testPath = directory + dirInfo.testDir;
 
-		var testFiles = fs.readdirSync(testPath);
+		var testFiles = fs.readdirSync(testPath); //gets names of all the folders
 		
-		var checkFiles = getFails(testFiles, dirInfo);
+		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure
 		
 		
 		var checkImages = [];
@@ -40,17 +42,18 @@ function newConnection(socket) {
 				
 				var actualImg = getImage(actualPath);
 				var failImg = getImage(failPath);
-				
+				//converts image to base 64;
 				var actualData =  "data:image/png;base64,"+ actualImg.toString("base64");
 				var failData =  "data:image/png;base64,"+ failImg.toString("base64");
 				
 				var name = img.split('.')[0];
 				
+				
 				checkImages.push({name: name, actualData: actualData, failData: failData});
 				
 			}
 		}
-		
+		//sends converted images back to client
 		socket.emit('images', checkImages);
 		
 	}
@@ -83,7 +86,7 @@ function getFilePath(phoneType) {
 
 
 
-function getFails(testFiles. dirInfo) {
+function getFails(testFiles, dirInfo) {
 	var checkFiles = [];
 	for (var i = 0; i < testFiles.length; i++) {
 		var dirName = testFiles[i];

@@ -5,11 +5,14 @@ var width = 640;
 canvas.height = height;
 canvas.width = width;
 
+//storing pixel data for images
 var actualImgd = [];
 var failImgd = [];
 var imgName = [];
 var transpose = [];
 var curr = 0;
+
+//when document is ready, start to listen to server
 $(document).ready(function() {
 	
 	socket = io.connect('http://localhost:3000');
@@ -24,8 +27,14 @@ $(window).resize(function() {
 	fitToContainer();
 });
 
-
+//when window is resized, adjust margins of everything
 function fitToContainer() {
+	/*
+	var ratio = ($(window).height() * 2 / 3) / canvas.height;
+	canvas.height = $(window).height() * 2 / 3;
+	canvas.width = ratio * canvas.width;
+	
+	*/
 	$('#start').css('margin-top', canvas.height/ 2 - 50);
 	$('#select').css('margin-top', canvas.height / 2 + 25);
 	
@@ -35,21 +44,27 @@ function fitToContainer() {
 	$('.right').css('margin-left', canvas.width / 2 + 50);
 };
 
-
+//when render button is clicked
 function start() {
 	//console.log('click');
 	var phoneType = $("#phone").val();
-	socket.emit('start', {phoneType: phoneType});
-	displayIssue();
-	$('canvas').css('visibility', 'visible');
 	
+	//gets path for type of phone from server
+	socket.emit('start', {phoneType: phoneType});
+	
+	//displayIssue();
+	
+	//hide buttons and reveal canvas
+	$('canvas').css('visibility', 'visible');
 	$('.left').css('visibility', 'visible');
 	$('.right').css('visibility', 'visible');
 	$('#render').css('display', 'none');
 	$('#select').css('display', 'none');
 	
+	
 }
 
+//go through images
 function next() {
 	curr = (curr + 1) % transpose.length;
 	displayIssue();
@@ -57,12 +72,12 @@ function next() {
 }
 
 function prev() {
-	
 	curr = (curr - 1 + transpose.length)  % transpose.length;
 	displayIssue();
 	console.log(curr);
 }
 
+//displays current image
 function displayIssue() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.putImageData(transpose[curr], 0, 0);
@@ -71,19 +86,20 @@ function displayIssue() {
 }
 
 
-
+//gets data from server (base64 conversion of images) and 
 function render(data) {
 	for (test of data) {
 		
+		//creates images
 		var actualImg = new Image();
-		actualImg.onload = renderActual;
+		actualImg.onload = renderActual; //gets pixel information
 		actualImg.src = test.actualData;
 		
 	
 		var failImg = new Image();
-		failImg.onload = renderTest;
+		failImg.onload = renderTest;  //gets pixel information
 		failImg.src = test.failData;
-		//console.log(test);
+	
 		imgName.push(test.name);
 	}
 	
@@ -95,31 +111,39 @@ function render(data) {
 			failImgd[i].data = newData;
 			transpose.push(failImgd[i]);
 		}
+		fitToContainer();
+		displayIssue();
+		
 	}, 0)
 }
 
+// gets pixel information
 function renderActual() {
 	canvas.width = this.width;
 	canvas.height = this.height;
+	//draws image onto the canvas and gets pixel information
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
 	var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
-	actualImgd.push(imgd);
+	actualImgd.push(imgd); //stores info
 	//console.log(imgd);
 	//return imgd;
 }
 
+// gets pixel information
 function renderTest() {
 	canvas.width = this.width;
 	canvas.height = this.height;
+	
+	//draws image onto the canvas and gets pixel information
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
-	
 	var imgd = ctx.getImageData(0, 0, canvas.width, canvas.height);
-	failImgd.push(imgd);
+	failImgd.push(imgd);  //stores info
 
 }
 
+//changes black pixels of test to known pixel
 function changePixel(actual, fail) {
 	for (var i = 0, n = fail.length; i < n; i += 4) {
 		var actualPix = {r: actual[i], g: actual[i+1], b: actual[i+ 2], a: actual[i+3]};
