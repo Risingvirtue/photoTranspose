@@ -129,3 +129,9 @@ i:hover {
 	right: 80%;
 }
 
+#colors {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+}
+

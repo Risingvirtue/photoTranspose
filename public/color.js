@@ -1,3 +1,4 @@
+/*
 var morning = [	{r:235, g: 237, b: 79},
 				{r:198, g: 196, b: 109},
 				{r: 167, g: 162, b: 134},
@@ -15,10 +16,17 @@ var highNoon = [{r:238, g: 105, b: 47},
 				{r:225, g: 176, b: 24},
 				{r:231, g: 126, b: 40},
 				{r:73, g: 60, b: 210}];
+*/
 
-var colors = [sunset, morning, highNoon];
-var index = 2;
-var currPalette = [{},{},{},{},{}];
+var sunset = [{r:64,g:40,b:74},
+			{r:240,g:126,b:7}];
+			
+var morning = [{r:169 ,g:241, b:246},
+				{r:255,g:233,b:166}];
+				
+var colors = [sunset, morning];
+var index = 1;
+var currPalette = [{},{}];
 var count = 0;
 function getLinearGradient(sky) {
 	function rgb(dict) {
@@ -49,6 +57,7 @@ function backgroundChange() {
 	if (count == 20) {
 		clearInterval(interval);
 		index = (index + 1) % colors.length;
+		
 	} else {
 		
 		for (var i = 0; i < color1.length; i++) {
@@ -59,7 +68,6 @@ function backgroundChange() {
 			var newColor = {r: Math.round(count * dr / 20) + color1[i].r,
 							g: Math.round(count * dg / 20) + color1[i].g,
 							b: Math.round(count * db / 20) + color1[i].b}
-			
 			currPalette[i] = newColor;
 		}
 		count++;
@@ -71,12 +79,13 @@ function drawBackground(palette) {
 	$('body').css('background', getLinearGradient(palette));
 }
 
+function changeColor() {
+	count = 0;
+	if (typeof interval !== 'undefined') {
+		clearInterval(interval);
+		index = (index + 1) % colors.length;
+	}
+	interval = setInterval(backgroundChange, 100);
+}
 setCurrPalette(sunset);
 drawBackground(currPalette);
-interval = setInterval(backgroundChange, 100);
-
-
-//var test = getLinearGradient(highNoon);
-
-//$('body').css('background', test);
-
