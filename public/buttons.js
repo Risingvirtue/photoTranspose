@@ -14,7 +14,6 @@ function start() {
 	//showInfo();
 }
 
-
 //need testing
 function resetInfo() {
 	ctx.clearRect(0,0, canvas.width, canvas.height);

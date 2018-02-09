@@ -18,21 +18,26 @@ var highNoon = [{r:238, g: 105, b: 47},
 				{r:73, g: 60, b: 210}];
 */
 
-var sunset = [{r:64,g:40,b:74},
+const sunset = [{r:64,g:40,b:74},
 			{r:240,g:126,b:7}];
 			
-var morning = [{r:169 ,g:241, b:246},
+const morning = [{r:169 ,g:241, b:246},
 				{r:255,g:233,b:166}];
-				
+
+const name = [{r:240,g:126,b:7},{r: 0,g: 0,b: 0}]
+
 var colors = [sunset, morning];
 var index = 1;
 var currPalette = [{},{}];
+var currName = {r:240,g:126,b:7};
+
 var count = 0;
+
+function rgb(dict) {
+	return 'rgb(' + dict.r + ',' + dict.g + ',' + dict.b + ')';
+}
 function getLinearGradient(sky) {
-	function rgb(dict) {
-		return 'rgb(' + dict.r + ',' + dict.g + ',' + dict.b + ')';
-	}
-	
+
 	var allColors = [];
 	for (color of sky) {
 		var colorString = rgb(color);
@@ -41,6 +46,8 @@ function getLinearGradient(sky) {
 	allColors = allColors.join(',');
 	return 'linear-gradient(' + allColors + ')';
 }
+
+
 
 function setCurrPalette(palette) {
 	for (var i = 0; i < palette.length; i++) {
@@ -54,13 +61,26 @@ function backgroundChange() {
 	
 	var color1 = currPalette;
 	var color2 = colors[index]; 
+	
+	var name1 = currName;
+	var name2 = name[index];
 	if (count == 20) {
 		clearInterval(interval);
 		index = (index + 1) % colors.length;
-		
 	} else {
+		//name
+		
+		var nr = name2.r - name1.r;
+		var ng = name2.g - name1.g;
+		var nb = name2.b - name1.b;
+			
+		var newName = {r: Math.round(count * nr / 20) + name1.r,
+						g: Math.round(count * ng / 20) + name1.g,
+						b: Math.round(count * nb / 20) + name1.b}
+		currName = newName;
 		
 		for (var i = 0; i < color1.length; i++) {
+			//background
 			var dr = color2[i].r - color1[i].r;
 			var dg = color2[i].g - color1[i].g;
 			var db = color2[i].b - color1[i].b;
@@ -70,8 +90,10 @@ function backgroundChange() {
 							b: Math.round(count * db / 20) + color1[i].b}
 			currPalette[i] = newColor;
 		}
+
 		count++;
 		drawBackground(currPalette);
+		drawName(currName);
 	}
 }
 
@@ -79,8 +101,13 @@ function drawBackground(palette) {
 	$('body').css('background', getLinearGradient(palette));
 }
 
+function drawName(palette) {
+	$('#name').css('color', rgb(palette));
+}
+
 function changeColor() {
 	count = 0;
+	
 	if (typeof interval !== 'undefined') {
 		clearInterval(interval);
 		index = (index + 1) % colors.length;
@@ -89,3 +116,6 @@ function changeColor() {
 }
 setCurrPalette(sunset);
 drawBackground(currPalette);
+
+drawName(currName);
+
