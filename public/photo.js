@@ -40,12 +40,14 @@ window.onclick = function(event) {
 
 //when window is resized, adjust margins of everything
 function fitToContainer() {
-
+	/*
 	var ratio = ($( window ).height() * 2/ 3) / canvas.height;
 	console.log(ratio);
 	canvas.height = canvas.height * ratio;
 	canvas.width = canvas.width * ratio;
+	*/
 	var rect = canvas.getBoundingClientRect();
+	
 	$("#failure").css('margin-top', canvas.height/ 2 - 100 + rect.top);
 
 	$('#start').css('margin-top', canvas.height/ 2 - 50 + rect.top);

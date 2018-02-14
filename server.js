@@ -105,13 +105,13 @@ function getOriginalDirectory() {
 function getFilePath(phoneType) {
 	switch (phoneType) {
 		case 'se':
-			return {actualDir: '\\eBike\\KnownScreenshots\\iOS\\iPhone SE', testDir: '\\eBike\\TestScreenshots\\iOS'}
+			return {actualDir: '\\Ebike\\KnownScreenshots\\iOS\\iPhone SE', testDir: '\\Ebike\\TestScreenshots\\iOS'}
 			break;
 		case '6gen':
-			return {actualDir: '\\eBike\\KnownScreenshots\\iOS\\iPod 6gen', testDir: '\\eBike\\TestScreenshots\\iOS'}
+			return {actualDir: '\\Ebike\\KnownScreenshots\\iOS\\iPod 6gen', testDir: '\\Ebike\\TestScreenshots\\iOS'}
 			break;
 		case 's7':
-			return {actualDir: '\\eBike\\KnownScreenshots\\Android\\s7', testDir: '\\eBike\\TestScreenshots\\Android'}
+			return {actualDir: '\\Ebike\\KnownScreenshots\\Android\\s7', testDir: '\\Ebike\\TestScreenshots\\Android'}
 			break;
 	}
 }
