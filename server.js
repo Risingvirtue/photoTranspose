@@ -21,13 +21,16 @@ io.sockets.on('connection', newConnection);
 var directory = getOriginalDirectory();
 var tempPath = '..\\python test\\test.py'
 var actualPath = directory + '\\python test\\test.py'
-exec('py "' + actualPath + '"', function (err, stdout, stderr) {
+
+/*
+exec('thor "' + actualPath + '"', function (err, stdout, stderr) {
 	if (err){
 		console.log(err);
 		return;
 	}
     console.log(stdout);
 });
+*/
 
 
 function newConnection(socket) {
@@ -102,13 +105,13 @@ function getOriginalDirectory() {
 function getFilePath(phoneType) {
 	switch (phoneType) {
 		case 'se':
-			return {actualDir: '\\KnownScreenshots\\iOS\\iPhone SE', testDir: '\\TestScreenshots\\iOS'}
+			return {actualDir: '\\eBike\\KnownScreenshots\\iOS\\iPhone SE', testDir: '\\eBike\\TestScreenshots\\iOS'}
 			break;
 		case '6gen':
-			return {actualDir: '\\KnownScreenshots\\iOS\\iPod 6gen', testDir: '\\TestScreenshots\\iOS'}
+			return {actualDir: '\\eBike\\KnownScreenshots\\iOS\\iPod 6gen', testDir: '\\eBike\\TestScreenshots\\iOS'}
 			break;
 		case 's7':
-			return {actualDir: '\\KnownScreenshots\\Android\\s7', testDir: '\\TestScreenshots\\Android'}
+			return {actualDir: '\\eBike\\KnownScreenshots\\Android\\s7', testDir: '\\eBike\\TestScreenshots\\Android'}
 			break;
 	}
 }
