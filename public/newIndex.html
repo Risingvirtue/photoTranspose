@@ -20,24 +20,23 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color: red">
 					<form class="form-inline">
 						<div class="input-group">
-							<select id='phone' class="form-control height customFont">
-								<option id="se" value="se" class="customFont mid">iPhone SE</option>
-								<option id="6gen" value="6gen" class="customFont mid">iPod 6gen</option>
-								<option id="s7" value="s7" class="customFont mid">Android s7</option>
+							<select id='phone' class="form-control">
+								<option value="se">iPhone SE</option>
+								<option value="6gen">iPod 6gen</option>
+								<option value="s7">Android s7</option>
 							</select>
 								<span class="input-group-btn">
-									<input class="btn height" id="render" type="button" onclick="start()" value="Render"></button>
+									<button class="btn" id="render" onclick="start()">Render</input>
 								</span>
 						</div>
 						<div>
-							
-							<input class="btn height" type="button" value="Remove" id="remove" onclick="start()"></label>
-							<input class="btn height" type="button" value="Replace" id="replace" onclick="start()"></label>
-							<input class="btn height" type="button" value="Known Directory" id="knownDir" onclick="start()"></label>
-							<input class="btn height" type="button" value="Test Directory" id="testDir" onclick="start()"></label>
+							<input class="btn" type="button" value="Remove" id="remove" onclick="start()"></label>
+							<input class="btn" type="button" value="Replace" id="replace" onclick="start()"></label>
+							<input class="btn" type="button" value="Known Directory" id="knownDir" onclick="start()"></label>
+							<input class="btn" type="button" value="Test Directory" id="testDir" onclick="start()"></label>
 						</div>
 					</form>
 			
@@ -53,12 +52,12 @@
 					</div>
 				</div>
 			</div>
-			<button class="absolute left" type="button" id="left" onclick="prev()">
-				<i class="fa fa-arrow-circle-o-left" aria-hidden="true""></i>
+			<button class="absolute left" type="button" id="left" onclick="left()">
+				<i class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="prev()"></i>
 			</button>
 			
-			<button class="absolute right" type="button" id="right" onclick="next()">
-				<i class="fa fa-arrow-circle-o-right" aria-hidden="true" ></i>
+			<button class="absolute right" type="button" id="right" onclick="right()">
+				<i class="fa fa-arrow-circle-o-right" aria-hidden="true" onclick="prev()"></i>
 			</button>
 			<p class="bottom"style="font-size: 12px;">@Johnny On 2018</p>
 		</div>
@@ -97,7 +96,7 @@
 		
 		<script src="newPhoto.js"></script>
 		<script src="buttons.js"></script>
-		<script src="render.js"></script>
+		
 		
 	</body>
 </html>

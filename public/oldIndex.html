@@ -1,0 +1,93 @@
+<!Doctype HTML>
+
+<html>
+	<head>
+		<title>Photo Transpose</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<!-- Socket.io-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type "text/css" href="photo.css">
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<!--
+			<div id='nofail' class='text-center absolute'>
+				<p id="failure" style="font-size: 20px">No failures for iPhone SE</p>
+			</div>
+			-->
+			
+			
+			<div id="start" class="text-center">
+				<button id="render" class="btn" onclick="start()">Render</button>
+			</div>
+			
+			<div id="select" class="text-center">
+				<select id='phone' style="width: 200px; margin-left: -100px;">
+					<option value="se">iPhone SE</option>
+					<option value="6gen">iPod 6gen</option>
+					<option value="s7">Android s7</option>
+				</select>
+			</div>
+			
+			<p class= "absolute left">
+				<i class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="prev()"></i>
+			</p>
+			<p class= "absolute right">
+				<i class="fa fa-arrow-circle-o-right" aria-hidden="true" onclick="next()"></i>
+			</p>
+			
+
+			<div id= "resetDiv" class="text-center">
+				<button id="reset" class="btn" onclick="resetInfo()">Reset</button>
+			</div>
+			
+			<div id= "removeDiv" class="text-center">
+				<button id="remove" class="btn" onclick="showRemove()">Remove</button>
+			</div>
+			
+			<div id= "colors" class="text-center">
+				<button id="play" class="btn" onclick="changeColor()">>></button>
+			</div>
+
+			<div class="row text-center">
+				<div>
+					<p id="name">Photo Transpose</p>
+				</div>
+				<canvas id="photo" class='frame innerFrame'></canvas>
+			</div>
+			
+			<p style="font-size: 12px; position:absolute; bottom:0; right:0;">@Johnny On 2018</p>
+			<canvas id="memory"></canvas>
+		</div>
+		
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content text-center">
+				
+				<div style="font-size: 25px">Select which phone failures to remove:</div>
+				<select id='phoneRemove' style="width: 200px; font-size: 25px">
+					<option value="se">iPhone SE</option>
+					<option value="6gen">iPod 6gen</option>
+					<option value="s7">Android s7</option>
+				</select>
+				
+				<button class="btn" onclick="remove()">Delete</button>
+			</div>
+		</div>
+		
+		<script src="photo.js"></script>
+		<script src="buttons.js"></script>
+		<script src="color.js"></script>
+		
+	</body>
+</html>

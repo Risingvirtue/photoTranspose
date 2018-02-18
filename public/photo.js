@@ -1,12 +1,12 @@
-canvas = document.getElementById("photo");
-ctx = canvas.getContext("2d");
+//canvas = document.getElementById("photo");
+//ctx = canvas.getContext("2d");
 
 var memory = document.getElementById("memory");
 var modal = document.getElementById('myModal');
 var height = 1136;
 var width = 640;
-canvas.height = height;
-canvas.width = width;
+//canvas.height = height;
+//canvas.width = width;
 
 //storing pixel data for images
 var actualImgd = [];
@@ -17,11 +17,21 @@ var curr = 0;
 
 //when document is ready, start to listen to server
 $(document).ready(function() {
-	socket = io.connect('http://localhost:3000');
+	//socket = io.connect('http://localhost:3000');
 	
 	//listening to server
 	socket.on('images', render);
 	fitToContainer();
+	
+	canvas1 = document.getElementById("test1");
+	ctx1 = canvas.getContext("2d");
+	
+	canvas2 = document.getElementById("test2");
+	ctx2 = canvas.getContext("2d");
+	
+	ctx1.fillRect(0,0, canvas1.width, canvas1.height);
+	ctx2.fillStyle = "blue";
+	ctx2.fillRect(0,0, canvas2.width, canvas2.height);
 })
 
 
@@ -47,7 +57,7 @@ function fitToContainer() {
 	canvas.width = canvas.width * ratio;
 	*/
 	var rect = canvas.getBoundingClientRect();
-	
+	/*
 	$("#failure").css('margin-top', canvas.height/ 2 - 100 + rect.top);
 
 	$('#start').css('margin-top', canvas.height/ 2 - 50 + rect.top);
@@ -57,6 +67,7 @@ function fitToContainer() {
 	$('.left').css('margin-left', -(canvas.width / 2 + 100));
 	$('.right').css('margin-top', canvas.height/ 2 - 50 + rect.top);
 	$('.right').css('margin-left', canvas.width / 2 + 50);
+	*/
 };
 
 
@@ -72,7 +83,7 @@ function displayIssue() {
 		
 		ctx.drawImage(memory, 0, 0, canvas.width, canvas.height);
 
-	console.log(imgName[curr]);
+	
 	$('#name').html(imgName[curr]);
 }
 

@@ -1,13 +1,6 @@
 
-function showInfo() {
-	$('canvas').css('visibility', 'visible');
-	$('.left').css('visibility', 'visible');
-	$('.right').css('visibility', 'visible');
-	$('#render').css('display', 'none');
-	$('#select').css('display', 'none');
-}
 function start() {
-	//console.log('click');
+	console.log('click');
 	var phoneType = $("#phone").val();
 	socket.emit('start', {phoneType: phoneType});
 	//displayIssue();
@@ -17,12 +10,7 @@ function start() {
 //need testing
 function resetInfo() {
 	ctx.clearRect(0,0, canvas.width, canvas.height);
-	$('canvas').css('visibility', 'hidden');
-	$('.left').css('visibility', 'hidden');
-	$('.right').css('visibility', 'hidden');
-	$('#render').css('display', 'block');
-	$('#select').css('display', 'block');
-	
+
 	$('#name').html('Photo Transpose');
 	actualImgd = [];
 	failImgd = [];

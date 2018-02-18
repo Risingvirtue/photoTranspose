@@ -20,9 +20,9 @@ io.sockets.on('connection', newConnection);
 
 var directory = getOriginalDirectory();
 var tempPath = '..\\python test\\test.py'
-var actualPath = directory + '\\python test\\test.py'
+var actualPath = directory + '\\Ebike'
 
-/*
+
 exec('thor "' + actualPath + '"', function (err, stdout, stderr) {
 	if (err){
 		console.log(err);
@@ -30,7 +30,7 @@ exec('thor "' + actualPath + '"', function (err, stdout, stderr) {
 	}
     console.log(stdout);
 });
-*/
+
 
 
 function newConnection(socket) {
@@ -48,6 +48,7 @@ function newConnection(socket) {
 
 		var testFiles = fs.readdirSync(testPath); //gets names of all the folders
 		
+		console.log(testFiles);
 		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure as well as the array of images
 		
 		var checkImages = [];

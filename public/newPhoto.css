@@ -1,0 +1,54 @@
+html, body {
+	font-weight: bold;
+	font-size: 25px;
+}
+
+#render {
+	display: inline-block;
+}
+
+.absolute {
+	position: absolute;
+	top: 50%;
+}
+
+
+.left {
+	
+}
+
+.right {
+	right: 0%;
+}
+
+.height {
+	height: 75px;
+}
+
+.bottom {
+    position: fixed;
+    bottom: 0;
+}
+
+.btn {
+	border: 2px solid black;
+	margin-top: 2px;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.customFont {
+	font-weight: bold;
+	font-size: 25px;
+}
+
+select {
+	text-align-last: center;
+	
+}
+
+select option {
+	text-align-last: center;
+}
+
+
