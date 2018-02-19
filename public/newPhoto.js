@@ -11,17 +11,19 @@ var imgName = [];
 var transpose = [];
 var curr = 0;
 var width = 0;
+var knownDir;
+var testDir;
 //when document is ready, start to listen to server
 $(document).ready(function() {
+	
 	socket = io.connect('http://localhost:3000');
 	
 	//listening to server
 	socket.on('images', render);
+	socket.on('directories', putDir);
 	fitToContainer();
-
-	ctxKnown.fillRect(0,0, canvasKnown.width, canvasKnown.height);
-	ctxTest.fillStyle = "blue";
-	ctxTest.fillRect(0,0, canvasTest.width, canvasTest.height);
+	
+	
 })
 
 
@@ -36,9 +38,15 @@ $(window).resize(function() {
 function fitToContainer() {
 	resizeButtons();
 	reconfigureArrows();
-	
-
 };
+
+
+window.onclick = function(event) {
+	modal = document.getElementById('myModal')
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
 function resizeButtons() {
 	var rect = canvasKnown.getBoundingClientRect();
@@ -51,7 +59,7 @@ function resizeButtons() {
 	$("#knownDir").css('width', Math.floor(rect.left / 2));
 	$("#testDir").css('width', Math.floor(rect.left /2 ));
 	width = Math.floor(rect.left / 2);
-	console.log($(document).height());
+	//console.log($(document).height());
 }
 
 function reconfigureArrows() {
@@ -69,13 +77,27 @@ function reconfigureArrows() {
 	$("#right").css('height', rightGap);
 	
 	
-	$("#left").css('left',rect.left - rightGap);
-	$("#right").css('left', rightRect.right);
+	$("#left").css('left',rect.left - rightGap - 10);
+	$("#right").css('left', rightRect.right + 10);
 	
 	$("#left").css('top',rect.top + canvasKnown.height / 2 - rightGap);
 	$("#right").css('top',rightRect.top + canvasTest.height / 2 - rightGap);
 }
 
+function showAndHide(phoneText) {
+	
+	$("#failure").html(phoneText);
+	$("#failure").fadeToggle("slow", function() {
+		$("#failure").fadeToggle("slow");
+	});
+}
+
+
+function putDir(data) {
+	
+	knownDir = data.actualPath;
+	testDir = data.testPath;
+}
 
 
 function displayIssue() {

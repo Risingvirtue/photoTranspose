@@ -48,7 +48,7 @@ function newConnection(socket) {
 
 		var testFiles = fs.readdirSync(testPath); //gets names of all the folders
 		
-		console.log(testFiles);
+		console.log(dirInfo);
 		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure as well as the array of images
 		
 		var checkImages = [];
@@ -70,6 +70,7 @@ function newConnection(socket) {
 		}
 		//sends converted images back to client
 		socket.emit('images', checkImages);
+		socket.emit('directories', {actualPath: dirInfo.actualDir.substring(6), testPath: dirInfo.testDir.substring(6)})
 		
 	}
 	//need to test

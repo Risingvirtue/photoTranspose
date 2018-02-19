@@ -1,6 +1,7 @@
 //gets data from server (base64 conversion of images) and 
 function render(data) {
-	console.log(data);
+	resetInfo();
+	//console.log(data);
 	for (test of data) {
 		
 		//creates images
@@ -32,7 +33,7 @@ function render(data) {
 		} else {
 			var phoneText = 'No failures for ' +  $("#phone :selected").text() + '.'
 			resetInfo();
-			//showAndHide(phoneText);
+			showAndHide(phoneText);
 		}
 
 	}, 0)
