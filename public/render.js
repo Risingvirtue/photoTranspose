@@ -8,9 +8,7 @@ function render(data) {
 		var actualImg = new Image();
 		actualImg.onload = renderActual; //gets pixel information
 		actualImg.src = test.actualData;
-		
-
-	
+			
 		var failImg = new Image();
 		failImg.onload = renderTest;  //gets pixel information
 		failImg.src = test.failData;
@@ -22,16 +20,16 @@ function render(data) {
 	setTimeout(function() {
 		for (var i = 0; i < actualImgd.length; i++) {
 			
-			//var newData = changePixel(actualImgd[i].data, failImgd[i].data);
+			var newData = changePixel(tempImgd[i].data, failImgd[i].data);
 			
-			//failImgd[i].data = newData;
-			transpose.push(failImgd[i]);
+			tempImgd[i].data = newData;
+			transpose.push(tempImgd[i]);
 		}
 
 		fitToContainer(); 
 		if (transpose.length != 0) {
 			//showInfo();
-			//displayIssue();
+			displayIssue();
 		} else {
 			var phoneText = 'No failures for ' +  $("#phone :selected").text() + '.'
 			resetInfo();
@@ -57,6 +55,8 @@ function renderActual() {
 	var imgd = ctxKnown.getImageData(0, 0, canvasKnown.width, canvasKnown.height);
 
 	actualImgd.push(imgd); //stores info
+	var otherimgd = ctxKnown.getImageData(0, 0, canvasKnown.width, canvasKnown.height);
+	tempImgd.push(otherimgd);
 }
 
 // gets pixel information
@@ -74,16 +74,17 @@ function renderTest() {
 
 //changes black pixels of test to known pixel
 function changePixel(actual, fail) {
-	var temp = actual.slice()
 	for (var i = 0, n = fail.length; i < n; i += 4) {
 		var actualPix = {r: actual[i], g: actual[i+1], b: actual[i+ 2], a: actual[i+3]};
-		var testPix = {r: fail[i], g: fail[i+1], b: fail[i+ 2]};
-		if ( testPix.r == 0 && testPix.g == 0 && testPix.b == 0) {
-			fail[i] = actualPix.r;
-			fail[i+1] = actualPix.g;
-			fail[i+2] = actualPix.b;
-			fail[i+3] = actualPix.a;
+		var testPix = {r: fail[i], g: fail[i+1], b: fail[i+ 2], a: fail[i+3]};
+		
+		if ( testPix.r != 0 || testPix.g != 0 || testPix.b != 0) {
+			
+			actual[i] =  testPix.r;
+			actual[i+1] = testPix.g;
+			actual[i+2] = testPix.b;
+			actual[i+3] =  testPix.a;
 		}
 	}
-	return fail;
+	return actual;
 }
