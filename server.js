@@ -60,7 +60,7 @@ function newConnection(socket) {
 			for (img of test.img) {
 				var actualPathImg = test.actualPath + '\\' + img;
 				var failPathImg = test.failPath + '\\' + img;
-				
+				console.log(actualPathImg, failPathImg);
 				var actualImg = getImage(actualPathImg);
 				var failImg = getImage(failPathImg);
 				//converts image to base 64;

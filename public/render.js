@@ -22,16 +22,16 @@ function render(data) {
 	setTimeout(function() {
 		for (var i = 0; i < actualImgd.length; i++) {
 			
-			var newData = changePixel(actualImgd[i].data, failImgd[i].data);
+			//var newData = changePixel(actualImgd[i].data, failImgd[i].data);
 			
-			failImgd[i].data = newData;
+			//failImgd[i].data = newData;
 			transpose.push(failImgd[i]);
 		}
 
 		fitToContainer(); 
 		if (transpose.length != 0) {
 			//showInfo();
-			displayIssue();
+			//displayIssue();
 		} else {
 			var phoneText = 'No failures for ' +  $("#phone :selected").text() + '.'
 			resetInfo();
