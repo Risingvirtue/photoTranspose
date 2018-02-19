@@ -10,6 +10,7 @@ function render(data) {
 		actualImg.src = test.actualData;
 		
 
+	
 		var failImg = new Image();
 		failImg.onload = renderTest;  //gets pixel information
 		failImg.src = test.failData;
@@ -19,13 +20,12 @@ function render(data) {
 	}
 	
 	setTimeout(function() {
-		
 		for (var i = 0; i < actualImgd.length; i++) {
 			
-			var newData = changePixel(tempImgd[i].data, failImgd[i].data);
+			var newData = changePixel(actualImgd[i].data, failImgd[i].data);
 			
-			tempImgd[i].data = newData;
-			transpose.push(tempImgd[i]);
+			failImgd[i].data = newData;
+			transpose.push(failImgd[i]);
 		}
 
 		fitToContainer(); 
@@ -57,9 +57,6 @@ function renderActual() {
 	var imgd = ctxKnown.getImageData(0, 0, canvasKnown.width, canvasKnown.height);
 
 	actualImgd.push(imgd); //stores info
-	var secondImgd = ctxKnown.getImageData(0, 0, canvasKnown.width, canvasKnown.height);
-	tempImgd.push(secondImgd);
-	
 }
 
 // gets pixel information
@@ -76,18 +73,17 @@ function renderTest() {
 }
 
 //changes black pixels of test to known pixel
-function changePixel(temp, fail) {
-	var pixels = [];
+function changePixel(actual, fail) {
+	var temp = actual.slice()
 	for (var i = 0, n = fail.length; i < n; i += 4) {
-		var actualPix = {r: temp[i], g: temp[i+1], b: temp[i+ 2], a: temp[i+3]};
-		var testPix = {r: fail[i], g: fail[i+1], b: fail[i+ 2], a: fail[i+3]};
-		if (testPix.r != 0 || testPix.g != 0 || testPix.b != 0) {
-			temp[i] = testPix.r;
-			temp[i+1] = testPix.g;
-			temp[i+2] = testPix.b;
-			temp[i+3] = testPix.a;
-		} 
+		var actualPix = {r: actual[i], g: actual[i+1], b: actual[i+ 2], a: actual[i+3]};
+		var testPix = {r: fail[i], g: fail[i+1], b: fail[i+ 2]};
+		if ( testPix.r == 0 && testPix.g == 0 && testPix.b == 0) {
+			fail[i] = actualPix.r;
+			fail[i+1] = actualPix.g;
+			fail[i+2] = actualPix.b;
+			fail[i+3] = actualPix.a;
+		}
 	}
-	
-	return temp;
+	return fail;
 }
