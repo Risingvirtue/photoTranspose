@@ -54,7 +54,7 @@ function openKnown() {
 }
 
 function openTest() {
-	$("#dirText").html(testDir + fileInfo[curr]);
+	$("#dirText").html(testDir + '\\'+  fileInfo[curr]);
 	$("#dirText").select();
     document.execCommand('copy');
 	showAndHide('Copied.')
@@ -62,7 +62,7 @@ function openTest() {
 
 
 function openFail() {
-	$("#dirText").html(testDir + fileInfo[curr] + '_failure');
+	$("#dirText").html(testDir + '\\' + fileInfo[curr] + '_failure');
 	$("#dirText").select();
     document.execCommand('copy');
 	showAndHide('Copied.')

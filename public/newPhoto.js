@@ -54,6 +54,7 @@ function resizeButtons() {
 	$("#replace").css('width', Math.floor(rect.left / 2));
 	$("#knownDir").css('width', Math.floor(rect.left / 2));
 	$("#testDir").css('width', Math.floor(rect.left /2 ));
+	$("#failDir").css('width', Math.floor(rect.left /2 ));
 	$("#dirText").css('width', Math.floor(rect.left / 2));
 	width = Math.floor(rect.left / 2);
 	//console.log($(document).height());
