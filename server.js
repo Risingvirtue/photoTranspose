@@ -9,6 +9,8 @@ var rimraf = require('rimraf');
 
 var exec = require("child_process").exec;
 
+var http = require('http');
+
 app.use(express.static('public'));
 
 var socket = require('socket.io');
@@ -22,7 +24,7 @@ var directory = getOriginalDirectory();
 var tempPath = '..\\python test\\test.py'
 var actualPath = directory + '\\Ebike'
 
-
+/*
 exec('thor "' + actualPath + '"', function (err, stdout, stderr) {
 	if (err){
 		console.log(err);
@@ -30,7 +32,7 @@ exec('thor "' + actualPath + '"', function (err, stdout, stderr) {
 	}
     console.log(stdout);
 });
-
+*/
 
 
 function newConnection(socket) {

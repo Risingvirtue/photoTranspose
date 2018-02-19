@@ -60,3 +60,11 @@ function openTest() {
 	showAndHide('Copied.')
 }
 
+
+function openFail() {
+	$("#dirText").html(testDir + fileInfo[curr] + '_failure');
+	$("#dirText").select();
+    document.execCommand('copy');
+	showAndHide('Copied.')
+}
+
