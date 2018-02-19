@@ -9,6 +9,7 @@ var actualImgd = [];
 var failImgd = [];
 var imgName = [];
 var transpose = [];
+var fileInfo = [];
 var curr = 0;
 var width = 0;
 var knownDir;
@@ -22,17 +23,12 @@ $(document).ready(function() {
 	socket.on('images', render);
 	socket.on('directories', putDir);
 	fitToContainer();
-	
-	
 })
 
 
 $(window).resize(function() {
 	fitToContainer();
-	
 });
-
-
 
 //when window is resized, adjust margins of everything
 function fitToContainer() {
@@ -58,6 +54,7 @@ function resizeButtons() {
 	$("#replace").css('width', Math.floor(rect.left / 2));
 	$("#knownDir").css('width', Math.floor(rect.left / 2));
 	$("#testDir").css('width', Math.floor(rect.left /2 ));
+	$("#dirText").css('width', Math.floor(rect.left / 2));
 	width = Math.floor(rect.left / 2);
 	//console.log($(document).height());
 }
@@ -83,15 +80,6 @@ function reconfigureArrows() {
 	$("#left").css('top',rect.top + canvasKnown.height / 2 - rightGap);
 	$("#right").css('top',rightRect.top + canvasTest.height / 2 - rightGap);
 }
-
-function showAndHide(phoneText) {
-	
-	$("#failure").html(phoneText);
-	$("#failure").fadeToggle("slow", function() {
-		$("#failure").fadeToggle("slow");
-	});
-}
-
 
 function putDir(data) {
 	

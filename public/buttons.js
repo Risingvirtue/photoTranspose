@@ -45,13 +45,18 @@ function prev() {
 }
 
 function openKnown() {
-	console.log('http://127.0.0.1:8000' + knownDir);
-	window.open('http://127.0.0.1:8000' + knownDir);
+	console.log(knownDir);
+	$("#dirText").html(knownDir + '\\' + fileInfo[curr]);
+	$("#dirText").select();
+    document.execCommand('copy');
+	showAndHide('Copied.')
 	//var known = window.open(knownDir);
 }
 
 function openTest() {
-	console.log(testDir);
-	var test =  window.open('http://127.0.0.1:8000' + testDir);
+	$("#dirText").html(testDir + fileInfo[curr]);
+	$("#dirText").select();
+    document.execCommand('copy');
+	showAndHide('Copied.')
 }
 

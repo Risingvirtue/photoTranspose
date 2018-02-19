@@ -15,6 +15,7 @@ function render(data) {
 		failImg.src = test.failData;
 	
 		imgName.push(test.name);
+		fileInfo.push(test.fileInfo);
 	}
 	
 	setTimeout(function() {
@@ -42,9 +43,8 @@ function render(data) {
 function showAndHide(phoneText) {
 	
 	$("#failure").html(phoneText);
-	$("#failure").fadeToggle("slow", function() {
-		$("#failure").fadeToggle("slow");
-	});
+	$("#failure").css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 1500);
+	$("#failure").css({opacity: 1, visibility: "visible"}).animate({opacity: 0}, 1500);
 }
 
 function renderActual() {

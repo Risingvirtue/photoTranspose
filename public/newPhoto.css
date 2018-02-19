@@ -85,6 +85,11 @@ select option {
 }
 
 #failure {
-	display: none;
+	visibility: hidden;
 	color: green;
+}
+
+#dirText {
+	
+	border: 2px solid black;
 }
