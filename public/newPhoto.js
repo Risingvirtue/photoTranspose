@@ -95,7 +95,7 @@ function displayIssue() {
 	ctxTest.clearRect(0, 0, canvasTest.width, canvasTest.height);
 	
 	ctxKnown.putImageData(actualImgd[curr], 0,0)
-	ctxTest.putImageData(failImgd[curr], 0, 0);
+	ctxTest.putImageData(tempImgd[curr], 0, 0);
 
 	$('#name').html(imgName[curr]);
 }
