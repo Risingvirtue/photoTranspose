@@ -9,7 +9,7 @@ function render(data) {
 		actualImg.onload = renderActual; //gets pixel information
 		actualImg.src = test.actualData;
 		
-	
+
 		var failImg = new Image();
 		failImg.onload = renderTest;  //gets pixel information
 		failImg.src = test.failData;
@@ -19,12 +19,13 @@ function render(data) {
 	}
 	
 	setTimeout(function() {
+		tempImgd = actualImgd.slice();
 		for (var i = 0; i < actualImgd.length; i++) {
 			
-			var newData = changePixel(actualImgd[i].data, failImgd[i].data);
+			var newData = changePixel(tempImgd[i].data, failImgd[i].data);
 			
 			failImgd[i].data = newData;
-			transpose.push(failImgd[i]);
+			transpose.push(tempImgd[i]);
 		}
 
 		fitToContainer(); 
@@ -56,6 +57,7 @@ function renderActual() {
 	var imgd = ctxKnown.getImageData(0, 0, canvasKnown.width, canvasKnown.height);
 
 	actualImgd.push(imgd); //stores info
+	
 }
 
 // gets pixel information
@@ -73,6 +75,7 @@ function renderTest() {
 
 //changes black pixels of test to known pixel
 function changePixel(actual, fail) {
+	var temp = actual.slice()
 	for (var i = 0, n = fail.length; i < n; i += 4) {
 		var actualPix = {r: actual[i], g: actual[i+1], b: actual[i+ 2], a: actual[i+3]};
 		var testPix = {r: fail[i], g: fail[i+1], b: fail[i+ 2]};

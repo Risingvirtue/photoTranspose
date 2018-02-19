@@ -7,6 +7,7 @@ ctxTest = canvasTest.getContext("2d");
 //storing pixel data for images
 var actualImgd = [];
 var failImgd = [];
+var tempImgd = [];
 var imgName = [];
 var transpose = [];
 var fileInfo = [];
@@ -94,7 +95,7 @@ function displayIssue() {
 	ctxTest.clearRect(0, 0, canvasTest.width, canvasTest.height);
 	
 	ctxKnown.putImageData(actualImgd[curr], 0,0)
-	ctxTest.putImageData(transpose[curr], 0, 0);
+	ctxTest.putImageData(failImgd[curr], 0, 0);
 
 	$('#name').html(imgName[curr]);
 }

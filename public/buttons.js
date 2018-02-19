@@ -18,6 +18,7 @@ function resetInfo() {
 	failImgd = [];
 	imgName = [];
 	transpose = [];
+	fileInfo = [];
 	curr = 0;
 
 }
