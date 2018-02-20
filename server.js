@@ -23,17 +23,7 @@ io.sockets.on('connection', newConnection);
 var directory = getOriginalDirectory();
 var tempPath = '..\\python test\\test.py'
 var actualPath = directory + '\\Ebike'
-
-/*
-exec('thor "' + actualPath + '"', function (err, stdout, stderr) {
-	if (err){
-		console.log(err);
-		return;
-	}
-    console.log(stdout);
-});
-*/
-
+fileInfo = {};
 
 function newConnection(socket) {
 	console.log('New Connection: ' + socket.id);
@@ -41,40 +31,46 @@ function newConnection(socket) {
 	socket.on('start', start);
 	//when render button is pressed
 	function start(data) {
+		fileInfo = {};
 		console.log(data);
 		var dirInfo = getFilePath(data.phoneType); //gets path of files based on phone
 		
 		var actualPath = directory  + dirInfo.actualDir;
 
 		var testPath = directory + dirInfo.testDir;
-		
+	
 		
 		var testFiles = fs.readdirSync(testPath); //gets names of all the folders
 		
-		console.log(actualPath);
+		
 		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure as well as the array of images
 		
 		var checkImages = [];
 		for (test of checkFiles) {
-			console.log(test)
+			
 			for (img of test.img) {
+				
 				var actualPathImg = test.actualPath + '\\' + img;
 				var failPathImg = test.failPath + '\\' + img;
-				console.log(actualPathImg, failPathImg);
+				var testPathImg = test.testPath + '\\' + img;
 				var actualImg = getImage(actualPathImg);
 				var failImg = getImage(failPathImg);
+				var testImg = getImage(testPathImg);
 				//converts image to base 64;
 				var actualData =  "data:image/png;base64,"+ actualImg.toString("base64");
 				var failData =  "data:image/png;base64,"+ failImg.toString("base64");
+				var testData =  testImg.toString("base64");
 				
 				var name = img.split('.')[0]; //remove .png from image name
-
+			
 				checkImages.push({name: name, actualData: actualData, failData: failData, fileInfo: test.file});
+				fileInfo[name] = {actualPath: test.fullTruePath + '\\' + img, img: testData}
 			}
 		}
+		//console.log(fileInfo);
 		//sends converted images back to client
 		socket.emit('images', checkImages);
-			
+		//for names
 		socket.emit('directories', {actualPath: actualPath,  testPath: testPath})
 		
 	}
@@ -97,6 +93,20 @@ function newConnection(socket) {
 		}
 	}
 	
+	socket.on('replace', replace);
+	
+	function replace(data) {
+		
+		fs.writeFile(fileInfo[data].actualPath, fileInfo[data].img, 'base64', function(err){
+			if (err) throw err
+			console.log('File saved.')
+		})
+		console.log(fileInfo[data].actualPath);
+		
+		//console.log(fileInfo[data]);
+	}
+
+
 }
 
 function getOriginalDirectory() {
@@ -126,16 +136,23 @@ function getFilePath(phoneType) {
 
 
 function getFails(testFiles, dirInfo) {
+	
 	var checkFiles = [];
 	for (var i = 0; i < testFiles.length; i++) {
+		
 		var dirName = testFiles[i];
 		var fail = dirName.substring(dirName.length - 7);
 		var file = dirName.substring(0, dirName.length - 8);
 		if (fail == 'failure') {
 			var failPath = '..' + dirInfo.testDir   + '\\' +  dirName;
 			var truePath = '..' + dirInfo.actualDir + '\\' + file;
+			var testPath =  '..' + dirInfo.testDir   + '\\' + file;
+			var fullTruePath = directory + dirInfo.actualDir + '\\' +  file;
+			
+			
 			var testImg = fs.readdirSync(failPath);
-			checkFiles.push({actualPath: truePath, failPath: failPath, file: file, img: testImg});
+			console.log(testImg);
+			checkFiles.push({fullTruePath, fullTruePath, testPath: testPath, actualPath: truePath, failPath: failPath, file: file, img: testImg});
 		}
 	}
 	return checkFiles;

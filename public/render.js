@@ -23,6 +23,8 @@ function render(data) {
 			var newData = changePixel(tempImgd[i].data, failImgd[i].data);
 			
 			tempImgd[i].data = newData;
+			
+			
 			transpose.push(tempImgd[i]);
 		}
 

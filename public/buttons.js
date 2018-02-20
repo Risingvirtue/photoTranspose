@@ -20,7 +20,6 @@ function resetInfo() {
 	transpose = [];
 	fileInfo = [];
 	curr = 0;
-
 }
 function showRemove() {
 	$('.modal').css('display', 'block');
@@ -31,6 +30,12 @@ function remove() {
 	$('.modal').css('display', 'none');
 	showAndHide($("#phoneRemove :selected").text() + ' failure folders deleted.');
 }
+
+function replaceImg() {
+	
+	socket.emit('replace', imgName[curr]);
+}
+
 
 function next() {
 	curr = (curr + 1) % transpose.length;
@@ -68,4 +73,5 @@ function openFail() {
     document.execCommand('copy');
 	showAndHide('Copied.')
 }
+
 
