@@ -1,11 +1,10 @@
 
 function start() {
-	//console.log('click');
+	
 	var phoneType = $("#phone").val();
 	socket.emit('start', {phoneType: phoneType});
 	$(".arrow").css('display', 'block');
-	//displayIssue();
-	//showInfo();
+
 }
 
 //need testing
