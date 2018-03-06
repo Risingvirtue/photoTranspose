@@ -131,7 +131,7 @@ function getFilePath(phoneType) {
 			return {actualDir: '\\Ebike\\KnownScreenshots\\Android\\s7', testDir: '\\Ebike\\TestScreenshots\\Android'}
 			break;
 		case 'pro':
-			return {actualDir: '\\Ebike\\KnownScreenshots\\Android\\s7', testDir: '\\Ebike\\TestScreenshots\\Android'}
+			return {actualDir: '\\Ebike\\KnownScreenshots\\iPad Pro', testDir: '\\Ebike\\TestScreenshots\\iOS'}
 			break;
 	}
 }
