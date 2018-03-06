@@ -1,6 +1,15 @@
 
 function start() {
-	
+	actualImgd = [];
+	failImgd = [];
+	tempImgd = [];
+	imgName = [];
+	transpose = [];
+	fileInfo = [];
+	curr = 0;
+	width = 0;
+	knownDir = '';
+	testDir = '';
 	var phoneType = $("#phone").val();
 	socket.emit('start', {phoneType: phoneType});
 	$(".arrow").css('display', 'block');
