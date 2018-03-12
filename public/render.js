@@ -1,5 +1,6 @@
 //gets data from server (base64 conversion of images) and 
 function render(data) {
+	
 	resetInfo();
 	//console.log(data);
 	for (test of data) {
@@ -12,7 +13,11 @@ function render(data) {
 		var failImg = new Image();
 		failImg.onload = renderTest;  //gets pixel information
 		failImg.src = test.failData;
-	
+		
+		var testImg = new Image();
+		testImg.onload = renderActualTest;
+		testImg.src = test.testData;
+		
 		imgName.push(test.name);
 		fileInfo.push(test.fileInfo);
 	}
@@ -71,6 +76,19 @@ function renderTest() {
 	ctxTest.drawImage(this, 0, 0, canvasTest.width, canvasTest.height);
 	var imgd = ctxTest.getImageData(0, 0, canvasTest.width, canvasTest.height);
 	failImgd.push(imgd);  //stores info
+
+}
+
+// gets pixel information
+function renderActualTest() {
+	canvasTest.width = this.width;
+	canvasTest.height = this.height;
+	
+	//draws image onto the canvas and gets pixel information
+	ctxTest.clearRect(0,0, canvasTest.width, canvasTest.height);
+	ctxTest.drawImage(this, 0, 0, canvasTest.width, canvasTest.height);
+	var imgd = ctxTest.getImageData(0, 0, canvasTest.width, canvasTest.height);
+	testImgd.push(imgd);  //stores info
 
 }
 

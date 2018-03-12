@@ -1,8 +1,8 @@
-
 function start() {
 	actualImgd = [];
 	failImgd = [];
 	tempImgd = [];
+	testImgd = [];
 	imgName = [];
 	transpose = [];
 	fileInfo = [];
@@ -46,16 +46,24 @@ function replaceImg() {
 
 
 function next() {
+	
 	curr = (curr + 1) % transpose.length;
 	displayIssue();
-	console.log(curr);
+	testClicked = false;
+	knownClicked = false;
+	$('#test').css('title', 'Switch to Error');
+	$('#known').css('title', 'Switch to Known');
+	
 }
 
 function prev() {
 	
 	curr = (curr - 1 + transpose.length)  % transpose.length;
 	displayIssue();
-	console.log(curr);
+	testClicked = false;
+	knownClicked = false;
+	$('#test').css('title', 'Switch to Error');
+	$('#known').css('title', 'Switch to Known');
 }
 
 function openKnown() {
@@ -74,7 +82,6 @@ function openTest() {
 	showAndHide('Copied.')
 }
 
-
 function openFail() {
 	$("#dirText").html(testDir + '\\' + fileInfo[curr] + '_failure');
 	$("#dirText").select();
@@ -82,4 +89,10 @@ function openFail() {
 	showAndHide('Copied.')
 }
 
+$('#known').click(function() {
+	swapKnown();
+})
 
+$('#test').click(function() {
+	swapTest();
+})

@@ -8,6 +8,7 @@ ctxTest = canvasTest.getContext("2d");
 var actualImgd = [];
 var failImgd = [];
 var tempImgd = [];
+var testImgd = [];
 var imgName = [];
 var transpose = [];
 var fileInfo = [];
@@ -15,6 +16,9 @@ var curr = 0;
 var width = 0;
 var knownDir;
 var testDir;
+var testClicked = false;
+var knownClicked = false;
+
 //when document is ready, start to listen to server
 $(document).ready(function() {
 	
@@ -44,6 +48,7 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
 
 function resizeButtons() {
 	var rect = canvasKnown.getBoundingClientRect();
@@ -98,4 +103,31 @@ function displayIssue() {
 	ctxTest.putImageData(transpose[curr], 0, 0);
 
 	$('#name').html(imgName[curr]);
+}
+
+function swapTest() {
+	if (testClicked) {
+		$('#test').css('title', 'Switch to Test');
+		ctxTest.clearRect(0, 0, canvasTest.width, canvasTest.height);
+		ctxTest.putImageData(transpose[curr], 0, 0);
+	} else {
+		$('#test').css('title', 'Switch to Transpose');
+		ctxTest.clearRect(0, 0, canvasTest.width, canvasTest.height);
+		ctxTest.putImageData(testImgd[curr], 0, 0);
+	}
+	testClicked = !testClicked;
+}
+
+function swapKnown() {
+	if (knownClicked) {
+		$('#known').css('title', 'Switch to Error');
+		ctxKnown.clearRect(0,0, canvasKnown.width, canvasKnown.height);
+		ctxKnown.putImageData(actualImgd[curr], 0,0)
+	} else {
+		$('#known').css('title', 'Switch to Known');
+		ctxKnown.clearRect(0,0, canvasKnown.width, canvasKnown.height);
+		ctxKnown.putImageData(failImgd[curr], 0, 0);
+		
+	}
+	knownClicked = !knownClicked;
 }

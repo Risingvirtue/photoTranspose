@@ -44,7 +44,7 @@ function newConnection(socket) {
 		
 		
 		var checkFiles = getFails(testFiles, dirInfo); // gets all the folders ending in failure as well as the array of images
-		
+		console.log(checkFiles);
 		var checkImages = [];
 		for (test of checkFiles) {
 			
@@ -59,15 +59,17 @@ function newConnection(socket) {
 				//converts image to base 64;
 				var actualData =  "data:image/png;base64,"+ actualImg.toString("base64");
 				var failData =  "data:image/png;base64,"+ failImg.toString("base64");
+				
+				
 				var testData =  testImg.toString("base64");
 				
 				var name = img.split('.')[0]; //remove .png from image name
 			
-				checkImages.push({name: name, actualData: actualData, failData: failData, fileInfo: test.file});
+				checkImages.push({name: name, actualData: actualData, failData: failData, testData: "data:image/png;base64," + testData, fileInfo: test.file});
 				fileInfo[name] = {actualPath: test.fullTruePath + '\\' + img, img: testData}
 			}
 		}
-		//console.log(fileInfo);
+	
 		//sends converted images back to client
 		socket.emit('images', checkImages);
 		//for names
@@ -157,7 +159,7 @@ function getFails(testFiles, dirInfo) {
 			
 			
 			var testImg = fs.readdirSync(failPath);
-			console.log(testImg);
+			
 			checkFiles.push({fullTruePath, fullTruePath, testPath: testPath, actualPath: truePath, failPath: failPath, file: file, img: testImg});
 		}
 	}
